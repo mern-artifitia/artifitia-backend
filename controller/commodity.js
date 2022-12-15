@@ -18,7 +18,7 @@ exports.addCommodity = async (req, res) => {
 exports.allCommodities = async(req,res)=>{
     try {
         const userId = req.user.id
-        const commodities = await Commodity.find({user: userId})
+        const commodities = await Commodity.find()
         if (commodities.length==0){
             return res.status(200).json({message: "No commodities"})
         }
