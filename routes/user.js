@@ -1,0 +1,22 @@
+const express = require("express");
+const router = express.Router();
+const { authUser } = require("../middlewares/auth");
+const { register, login, editProfile, addFund,withdrawFund,profile,forgotPassword,verifyOtp } = require("../controller/user");
+
+router.post("/register", register);
+
+router.post("/login", login);
+
+router.put("/editProfile/:id",authUser, editProfile);
+
+router.post("/forgotPassword", forgotPassword);
+
+router.post("/verifyOtp", verifyOtp);
+
+router.post("/addFund/:id",authUser, addFund);
+
+router.post("/withdrawFund/:id",authUser, withdrawFund);
+
+router.get("/profile/:id",authUser, profile);
+
+module.exports = router;
