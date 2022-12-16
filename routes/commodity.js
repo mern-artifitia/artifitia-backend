@@ -11,7 +11,7 @@ const router = express.Router();
 
 router.post("/addCommodity", authUser, addCommodity);
 
-router.get("/allCommodities", authUser, allCommodities);
+router.get("/allCommodities",  allCommodities);
 
 router.put("/editCommodity/:id", authUser, editCommodity);
 

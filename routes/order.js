@@ -12,7 +12,7 @@ const {
 
 router.post('/newOrder', authUser, newOrder)
 
-router.get('/allOrders', allOrders)
+router.get('/allOrders', authUser, allOrders)
 
 router.put('/editOrder/:id', authUser, editOrder)
 
