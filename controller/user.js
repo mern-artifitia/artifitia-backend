@@ -37,8 +37,9 @@ exports.register = async (req, res) => {
 
 exports.login = async (req, res) => {
   try {
-    const { phone, password } = req.body;
-    const user = await User.findOne({ phone });
+    const { email, password } = req.body;
+    const user = await User.findOne({email });
+    console.log(user);
     
     if (!user) {
       return res.status(400).json({
@@ -171,3 +172,13 @@ exports.verifyOtp= async(req,res)=>{
         res.status(500).json({ message: error.message });
     }
 }
+
+
+exports.allUsers = async (req, res) => {
+  try {
+    const users = await User.find();
+    res.status(200).json({ users });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
