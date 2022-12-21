@@ -182,3 +182,28 @@ exports.allUsers = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+
+exports.addSpread = async (req, res) => {
+  try {
+    const {spread}= req.body
+    const id = req.user.id
+    const addspread = await User.findByIdAndUpdate(id, {
+       spread
+    });
+   
+    res.status(200).json({ message: `success` });
+  } catch (error) {
+        return res.status(500).json({ message: error.message });
+  }
+};
+
+exports.getSpread = async (req, res) => {
+  try {
+    const user = await User.findOne({isAdmin: true});
+    res.status(200).json({ spread:user.spread });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+

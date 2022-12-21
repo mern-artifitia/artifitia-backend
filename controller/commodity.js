@@ -15,6 +15,7 @@ exports.addCommodity = async (req, res) => {
   }
 };
 
+
 exports.allCommodities = async(req,res)=>{
     try {
     

@@ -3,7 +3,8 @@ const {
   addCommodity,
   allCommodities,
   editCommodity,
-  deleteCommodity
+  deleteCommodity,
+  addSpread
 } = require("../controller/commodity");
 const { authUser } = require("../middlewares/auth");
 

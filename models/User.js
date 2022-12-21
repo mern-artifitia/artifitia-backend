@@ -41,6 +41,10 @@ const userSchema = mongoose.Schema(
         type: Boolean,
         required : [true, "isAdmin is required"]
     },
+    spread:{
+      type: Number,
+      required: [true, "spread is required"],
+    },
     accountBalance: {
       type: Number,
       required: true,
