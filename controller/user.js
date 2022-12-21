@@ -184,12 +184,26 @@ exports.allUsers = async (req, res) => {
 };
 
 
-exports.addSpread = async (req, res) => {
+exports.addGoldSpread = async (req, res) => {
   try {
-    const {spread}= req.body
+    const {goldSpread}= req.body
     const id = req.user.id
     const addspread = await User.findByIdAndUpdate(id, {
-       spread
+      goldSpread
+    });
+   
+    res.status(200).json({ message: `success` });
+  } catch (error) {
+        return res.status(500).json({ message: error.message });
+  }
+};
+
+exports.addSilverSpread = async (req, res) => {
+  try {
+    const {silverSpread}= req.body
+    const id = req.user.id
+    const addspread = await User.findByIdAndUpdate(id, {
+       silverSpread
     });
    
     res.status(200).json({ message: `success` });
@@ -201,7 +215,7 @@ exports.addSpread = async (req, res) => {
 exports.getSpread = async (req, res) => {
   try {
     const user = await User.findOne({isAdmin: true});
-    res.status(200).json({ spread:user.spread });
+    res.status(200).json({ goldSpread:user.goldSpread, silverSpread:user.silverSpread });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

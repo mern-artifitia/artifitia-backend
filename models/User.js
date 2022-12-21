@@ -41,7 +41,11 @@ const userSchema = mongoose.Schema(
         type: Boolean,
         required : [true, "isAdmin is required"]
     },
-    spread:{
+    goldSpread:{
+      type: Number,
+      required: [true, "spread is required"],
+    },
+    silverSpread:{
       type: Number,
       required: [true, "spread is required"],
     },
