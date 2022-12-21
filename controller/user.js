@@ -186,10 +186,10 @@ exports.allUsers = async (req, res) => {
 
 exports.addGoldSpread = async (req, res) => {
   try {
-    const {goldSpread}= req.body
+    const {spread}= req.body
     const id = req.user.id
     const addspread = await User.findByIdAndUpdate(id, {
-      goldSpread
+      goldSpread: spread
     });
    
     res.status(200).json({ message: `success` });
@@ -200,10 +200,10 @@ exports.addGoldSpread = async (req, res) => {
 
 exports.addSilverSpread = async (req, res) => {
   try {
-    const {silverSpread}= req.body
+    const {spread}= req.body
     const id = req.user.id
     const addspread = await User.findByIdAndUpdate(id, {
-       silverSpread
+       silverSpread : spread
     });
    
     res.status(200).json({ message: `success` });
