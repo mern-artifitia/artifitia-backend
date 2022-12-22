@@ -221,3 +221,26 @@ exports.getSpread = async (req, res) => {
   }
 };
 
+
+exports.bidOrBuy = async (req, res) => {
+  try {
+    const {option}= req.body
+    const id = req.user.id
+    const addspread = await User.findByIdAndUpdate(id, {
+       option : option
+    });
+   
+    res.status(200).json({ message: `success` });
+  } catch (error) {
+        return res.status(500).json({ message: error.message });
+  }
+};
+
+exports.getBidOrBuy = async (req, res) => {
+  try {
+    const user = await User.findOne({isAdmin: true});
+    res.status(200).json({ option:user.option });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};

@@ -43,11 +43,12 @@ const userSchema = mongoose.Schema(
     },
     goldSpread:{
       type: Number,
-      required: [true, "spread is required"],
     },
     silverSpread:{
       type: Number,
-      required: [true, "spread is required"],
+    },
+    option:{
+      type: String,
     },
     accountBalance: {
       type: Number,
