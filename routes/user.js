@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { authUser } = require("../middlewares/auth");
-const { register, login, editProfile, addFund,withdrawFund,profile,forgotPassword,verifyOtp,allUsers, addGoldSpread,getSpread ,addSilverSpread,bidOrBuy,getBidOrBuy,mediaImage} = require("../controller/user");
+const { register, login, editProfile, addFund,withdrawFund,profile,forgotPassword,verifyOtp,allUsers, addGoldSpread,getSpread ,addSilverSpread,bidOrBuy,getBidOrBuy,mediaImage,updatePassword} = require("../controller/user");
 
 router.post("/register", register);
 
@@ -13,7 +13,7 @@ router.post("/forgotPassword", forgotPassword);
 
 router.post("/verifyOtp", verifyOtp);
 
-// router.put("/updatePassword", updatePassword);
+router.put("/updatePassword", updatePassword);
 
 router.post("/addFund/:id",authUser, addFund);
 

@@ -180,7 +180,7 @@ exports.verifyOtp= async(req,res)=>{
     }
 }
 
-exports.resetPassword= async(req,res)=>{
+exports.updatePassword= async(req,res)=>{
   try {
       const{phoneNumber, password}= req.body  
       const cryptedPassword = await bcrypt.hash(password, 12);
