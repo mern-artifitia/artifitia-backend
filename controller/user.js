@@ -4,6 +4,8 @@ const bcrypt = require("bcrypt");
 const { validateUsername } = require("../helpers/validation");
 const { generateToken } = require("../helpers/token");
 const verify = require("../helpers/otpVerify");
+const {store}= require("../helpers/multer")
+
 exports.register = async (req, res) => {
   try {
     const { first_name, last_name, phone, email, password, isAdmin } = req.body;
@@ -61,6 +63,7 @@ exports.login = async (req, res) => {
       username: user.username,
       first_name: user.first_name,
       last_name: user.last_name,
+      email: user.email,
       accountBalance : user.accountBalance,
       token: token,
     });
@@ -141,6 +144,10 @@ exports.forgotPassword = async(req,res)=>{
   try {
       const {phoneNumber} = req.body
       const user = await User.findOne({ phone:phoneNumber });
+      return res.status(200).json({
+        message:
+          "Reset password request successfully placed",
+      });
     
     if (!user) {
       return res.status(400).json({
@@ -171,6 +178,21 @@ exports.verifyOtp= async(req,res)=>{
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
+}
+
+exports.resetPassword= async(req,res)=>{
+  try {
+      const{phoneNumber, password}= req.body  
+      const cryptedPassword = await bcrypt.hash(password, 12);
+      const user = await User.updateOne({phone: phoneNumber }, { $set: { password: cryptedPassword }});
+      
+      return res.status(200).json({
+        message:
+          "Password Updated",
+      }); 
+  } catch (error) {
+      res.status(500).json({ message: error.message });
+  }
 }
 
 
@@ -240,6 +262,15 @@ exports.getBidOrBuy = async (req, res) => {
   try {
     const user = await User.findOne({isAdmin: true});
     res.status(200).json({ option:user.option });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+exports.mediaImage = async (req, res) => {
+  try {
+    store.single('file')
+    res.status(200).json({ user });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
