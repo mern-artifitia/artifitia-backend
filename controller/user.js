@@ -65,6 +65,7 @@ exports.login = async (req, res) => {
       last_name: user.last_name,
       email: user.email,
       accountBalance : user.accountBalance,
+      phone: user.phone,
       token: token,
     });
   } catch (error) {
