@@ -40,7 +40,7 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await User.findOne({email });
+    const user = await User.findOne({ "$or": [ { email: email }, { phone: email} ] });;
     console.log(user);
     
     if (!user) {
@@ -179,7 +179,6 @@ exports.verifyOtp= async(req,res)=>{
         res.status(500).json({ message: error.message });
     }
 }
-
 exports.updatePassword= async(req,res)=>{
   try {
       const{phoneNumber, password}= req.body  
@@ -275,3 +274,4 @@ exports.mediaImage = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
