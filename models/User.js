@@ -29,7 +29,7 @@ const userSchema = mongoose.Schema(
     },
 
     phone: {
-      type: Number,
+      type: String,
       required: [true, "phone number is required"],
       trim: true,
     },

@@ -35,8 +35,7 @@ exports.editCommodity = async (req, res) => {
     try {
     const id = req.params.id;
     const commodity = await Commodity.findByIdAndUpdate(id,{ ...req.body, user: req.user.id});
-
-      res.status(200).json({ message: `sucess ${commodity}` });
+      res.status(200).json({ message: `sucess ` });
     } catch (error) {
           return res.status(500).json({ message: error.message });
     }

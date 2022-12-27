@@ -40,13 +40,14 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await User.findOne({ "$or": [ { email: email }, { phone: email} ] });;
+    
+    const user = await User.findOne({ "$or": [ { email: email }, { phone: email} ] });
     console.log(user);
     
     if (!user) {
       return res.status(400).json({
         message:
-          "the email address you entered is not connected to an account.",
+          "the phone number you entered is not connected to an account.",
       });
     }
 
