@@ -38,7 +38,7 @@ router.post("/bidOrBuy", authUser, bidOrBuy);
 
 router.get("/getBidOrBuy", getBidOrBuy);
 
-router.post("/mediaImage",authUser, mediaImage);
+// router.post("/mediaImage",authUser, mediaImage);
 
 router.post("/uploadImages", authUser, imageUpload, uploadImages);
 
