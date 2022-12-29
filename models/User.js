@@ -61,6 +61,9 @@ const userSchema = mongoose.Schema(
       required: true,
       default: 0
     }, 
+    mediaUrl :[{
+      url: String
+    }] ,
     transactions : [
       {
         transactionType :{

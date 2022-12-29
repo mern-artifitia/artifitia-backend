@@ -19,7 +19,7 @@ exports.allOrders = async(req,res)=>{
         if (orders.length==0){
             return res.status(200).json({message: "No orders"})
         }
-
+        
         res.status(200).json({ orders})
 
     } catch (error) {

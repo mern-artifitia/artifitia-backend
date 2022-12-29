@@ -5,6 +5,9 @@ const { validateUsername } = require("../helpers/validation");
 const { generateToken } = require("../helpers/token");
 const verify = require("../helpers/otpVerify");
 const {store}= require("../helpers/multer")
+const cloudinary = require("cloudinary");
+const fs = require("fs");
+const path = require("path");
 
 exports.register = async (req, res) => {
   try {
@@ -298,10 +301,84 @@ exports.getBidOrBuy = async (req, res) => {
 
 exports.mediaImage = async (req, res) => {
   try {
-    store.single('file')
-    res.status(200).json({ user });
+    store.array('files')
+    console.log(req.files); // The uploaded images are stored in req.files
+    res.status(200).json({sucess: "success" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
+
+exports.storeImageUrl = async (req, res) => {
+  try {
+    const {url}= req.body
+    const id = req.user.id
+    const addimage = await User.findByIdAndUpdate(id, { $push: { url }});
+   
+    res.status(200).json({ message: `success` });
+  } catch (error) {
+        return res.status(500).json({ message: error.message });
+  }
+};
+
+exports.imageList = async (req, res) => {
+  try {
+    const id =req.user.id
+    const user = await User.findById(id);
+    res.status(200).json({ images: user.mediaUrl });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+/****Cloudinary Image   ***** */
+
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.CLOUD_API_SECRET,
+});
+
+exports.uploadImages = async (req, res) => {
+  try {
+    const { path } = req.body;
+    let files = Object.values(req.files).flat();
+    let images = [];
+    for (const file of files) {
+      const url = await uploadToCloudinary(file, path);
+      images.push(url);
+      removeTmp(file.tempFilePath);
+    }
+    res.json(images);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+const uploadToCloudinary = async (file, path) => {
+  return new Promise((resolve) => {
+    cloudinary.v2.uploader.upload(
+      file.tempFilePath,
+      {
+        folder: path,
+      },
+      (err, res) => {
+        if (err) {
+          removeTmp(file.tempFilePath);
+          return res.status(400).json({ message: "Upload image failed." });
+        }
+        resolve({
+          url: res.secure_url,
+        });
+      }
+    );
+  });
+};
+
+const removeTmp = (path) => {
+  fs.unlink(path, (err) => {
+    if (err) throw err;
+  });
+};
+
 

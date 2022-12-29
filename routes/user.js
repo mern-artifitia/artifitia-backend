@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const { authUser } = require("../middlewares/auth");
-const { register, login, editProfile, addFund,withdrawFund,profile,forgotPassword,verifyOtp,allUsers, addAskGoldSpread,addBidGoldSpread,getSpread ,addAskSilverSpread,addBidSilverSpread,bidOrBuy,getBidOrBuy,mediaImage,updatePassword} = require("../controller/user");
+const imageUpload = require("../middlewares/imageUpload");
+const { register, login, editProfile, addFund,withdrawFund,profile,forgotPassword,verifyOtp,allUsers, addAskGoldSpread,addBidGoldSpread,getSpread ,addAskSilverSpread,addBidSilverSpread,bidOrBuy,getBidOrBuy,mediaImage,updatePassword,uploadImages,storeImageUrl,imageList} = require("../controller/user");
 
 router.post("/register", register);
 
@@ -38,5 +39,11 @@ router.post("/bidOrBuy", authUser, bidOrBuy);
 router.get("/getBidOrBuy", getBidOrBuy);
 
 router.post("/mediaImage",authUser, mediaImage);
+
+router.post("/uploadImages", authUser, imageUpload, uploadImages);
+
+router.post("/storeImageUrl",authUser, storeImageUrl)
+
+router.get("/imageList",authUser, imageList)
 
 module.exports = router;

@@ -1,15 +1,12 @@
 const multer = require('multer');
 const path = require('path');
 
-/* File upload*/
+// Set up multer for file upload
 const storage = multer.diskStorage({
-    destination: function(req, file, cb) {
-        cb(null, './images/banner-images');
+    destination: './images', // Destination directory for uploaded files
+    filename: (req, file, callback) => {
+      callback(null, `${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`);
     },
-  
-    filename: function(req, file, cb) {
-        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
-    }
   });
   
-  exports.store = multer({ storage: storage })
+  exports.store = multer({ storage });
