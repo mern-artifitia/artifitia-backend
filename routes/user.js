@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { authUser } = require("../middlewares/auth");
-const { register, login, editProfile, addFund,withdrawFund,profile,forgotPassword,verifyOtp,allUsers, addGoldSpread,getSpread ,addSilverSpread,bidOrBuy,getBidOrBuy,mediaImage,updatePassword} = require("../controller/user");
+const { register, login, editProfile, addFund,withdrawFund,profile,forgotPassword,verifyOtp,allUsers, addAskGoldSpread,addBidGoldSpread,getSpread ,addAskSilverSpread,addBidSilverSpread,bidOrBuy,getBidOrBuy,mediaImage,updatePassword} = require("../controller/user");
 
 router.post("/register", register);
 
@@ -23,9 +23,13 @@ router.get("/profile/:id",authUser, profile);
 
 router.get("/allUsers",authUser, allUsers);
 
-router.post("/addGoldSpread", authUser, addGoldSpread);
+router.post("/addAskGoldSpread", authUser, addAskGoldSpread);
 
-router.post("/addSilverSpread", authUser, addSilverSpread);
+router.post("/addAskSilverSpread", authUser, addAskSilverSpread);
+
+router.post("/addBidGoldSpread", authUser, addBidGoldSpread);
+
+router.post("/addBidSilverSpread", authUser, addBidSilverSpread);
 
 router.get("/getSpread", getSpread);
 

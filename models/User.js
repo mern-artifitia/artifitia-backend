@@ -41,10 +41,16 @@ const userSchema = mongoose.Schema(
         type: Boolean,
         required : [true, "isAdmin is required"]
     },
-    goldSpread:{
+    goldAskSpread:{
       type: Number,
     },
-    silverSpread:{
+    goldBidSpread:{
+      type: Number,
+    },
+    silverAskSpread:{
+      type: Number,
+    },
+    silverBidSpread:{
       type: Number,
     },
     option:{

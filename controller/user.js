@@ -207,12 +207,12 @@ exports.allUsers = async (req, res) => {
 };
 
 
-exports.addGoldSpread = async (req, res) => {
+exports.addAskGoldSpread = async (req, res) => {
   try {
     const {spread}= req.body
     const id = req.user.id
     const addspread = await User.findByIdAndUpdate(id, {
-      goldSpread: spread
+      goldAskSpread: spread
     });
    
     res.status(200).json({ message: `success` });
@@ -221,12 +221,40 @@ exports.addGoldSpread = async (req, res) => {
   }
 };
 
-exports.addSilverSpread = async (req, res) => {
+exports.addBidGoldSpread = async (req, res) => {
   try {
     const {spread}= req.body
     const id = req.user.id
     const addspread = await User.findByIdAndUpdate(id, {
-       silverSpread : spread
+      goldBidSpread: spread
+    });
+   
+    res.status(200).json({ message: `success` });
+  } catch (error) {
+        return res.status(500).json({ message: error.message });
+  }
+};
+
+exports.addAskSilverSpread = async (req, res) => {
+  try {
+    const {spread}= req.body
+    const id = req.user.id
+    const addspread = await User.findByIdAndUpdate(id, {
+       silverAskSpread : spread
+    });
+   
+    res.status(200).json({ message: `success` });
+  } catch (error) {
+        return res.status(500).json({ message: error.message });
+  }
+};
+
+exports.addBidSilverSpread = async (req, res) => {
+  try {
+    const {spread}= req.body
+    const id = req.user.id
+    const addspread = await User.findByIdAndUpdate(id, {
+       silverBidSpread : spread
     });
    
     res.status(200).json({ message: `success` });
@@ -238,7 +266,7 @@ exports.addSilverSpread = async (req, res) => {
 exports.getSpread = async (req, res) => {
   try {
     const user = await User.findOne({isAdmin: true});
-    res.status(200).json({ goldSpread:user.goldSpread, silverSpread:user.silverSpread });
+    res.status(200).json({ goldAskSpread:user.goldAskSpread,goldBidSpread:user.goldBidSpread, silverAskSpread:user.silverAskSpread,  silverBidSpread:user.silverBidSpread  });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
