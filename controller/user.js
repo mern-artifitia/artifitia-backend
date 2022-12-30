@@ -313,7 +313,7 @@ exports.storeImageUrl = async (req, res) => {
   try {
     const {url}= req.body
     const id = req.user.id
-    const addimage = await User.findByIdAndUpdate(id, { $push: { url }});
+    const addimage = await User.findByIdAndUpdate(id, { $push: { mediaUrl: {url} }});
    
     res.status(200).json({ message: `success` });
   } catch (error) {
@@ -325,7 +325,21 @@ exports.imageList = async (req, res) => {
   try {
     const id =req.user.id
     const user = await User.findById(id);
-    res.status(200).json({ images: user.mediaUrl });
+    res.status(200).json( user.mediaUrl );
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+exports.removeMediaImage = async (req, res) => {
+  try {
+    const id =req.user.id
+    var imageId = mongoose.Types.ObjectId(req.params.id);
+    const user = await User.findOneAndUpdate(
+      { _id: id },
+      { $pull: { mediaUrl: { _id: imageId } } } 
+    );
+    res.status(200).json( "Success" );
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
